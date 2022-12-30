@@ -1,8 +1,14 @@
+
+# Crie uma classe para representar as cartas. Cada carta deve ter um valor e um naipe. Você pode usar uma tupla para representar esses atributos, por exemplo:
+
 class Carta:
   def __init__(self, valor, naipe):
     self.valor = valor
     self.naipe = naipe
-    import random
+    
+# Crie uma classe para representar o baralho. O baralho deve conter uma lista de cartas e deve ter métodos para adicionar cartas, embaralhar as cartas e retirar cartas. Aqui está um exemplo de como essa classe poderia ser implementada:
+
+import random
 
 class Baralho:
   def __init__(self):
@@ -16,7 +22,8 @@ class Baralho:
 
   def retirar_carta(self):
     return self.cartas.pop()
-    
+# Crie uma classe para representar os jogadores. Cada jogador deve ter um nome e uma mão (uma lista de cartas). Você pode adicionar métodos para adicionar cartas à mão do jogador e para mostrar a mão do jogador. Aqui está um exemplo de como essa classe poderia ser implementada:
+
 class Jogador:
   def __init__(self, nome):
     self.nome = nome
@@ -28,6 +35,7 @@ class Jogador:
   def mostrar_mao(self):
     for carta in self.mao:
       print(f'{carta.valor} de {carta.naipe}')
+# Crie uma classe para representar o jogo. Essa classe deve ter um baralho e uma lista de jogadores. Ela deve ter métodos para iniciar o jogo, distribuir as cartas e determinar o vencedor. Aqui está um exemplo de como essa classe poderia ser implementada:
 
 class Jogo:
   def __init__(self, nomes_jogadores):
@@ -41,6 +49,3 @@ class Jogo:
     for jogador in self.jogadores:
       for i in range(5):
         jogador.adicionar_carta(self.baralho.retirar_carta())
-
-
-
