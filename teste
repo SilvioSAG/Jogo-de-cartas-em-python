@@ -1,0 +1,46 @@
+class Carta:
+  def __init__(self, valor, naipe):
+    self.valor = valor
+    self.naipe = naipe
+    import random
+
+class Baralho:
+  def __init__(self):
+    self.cartas = []
+
+  def adicionar_carta(self, carta):
+    self.cartas.append(carta)
+
+  def embaralhar(self):
+    random.shuffle(self.cartas)
+
+  def retirar_carta(self):
+    return self.cartas.pop()
+    
+class Jogador:
+  def __init__(self, nome):
+    self.nome = nome
+    self.mao = []
+
+  def adicionar_carta(self, carta):
+    self.mao.append(carta)
+
+  def mostrar_mao(self):
+    for carta in self.mao:
+      print(f'{carta.valor} de {carta.naipe}')
+
+class Jogo:
+  def __init__(self, nomes_jogadores):
+    self.baralho = Baralho()
+    self.jogadores = []
+    for nome in nomes_jogadores:
+      jogador = Jogador(nome)
+      self.jogadores.append(jogador)
+
+  def distribuir_cartas(self):
+    for jogador in self.jogadores:
+      for i in range(5):
+        jogador.adicionar_carta(self.baralho.retirar_carta())
+
+
+
