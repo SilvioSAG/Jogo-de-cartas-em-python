@@ -1,0 +1,87 @@
+import random
+
+# define card class
+class Card:
+    def __init__(self, name, attack, defense):
+        self.name = name
+        self.attack = attack
+        self.defense = defense
+
+# define player class
+class Player:
+    def __init__(self, name):
+        self.name = name
+        self.hand = []
+        self.life_points = 20
+
+# define game class
+class Game:
+    def __init__(self, player1, player2):
+        self.player1 = player1
+        self.player2 = player2
+        self.deck = self.create_deck()
+
+    # create the deck of cards
+    def create_deck(self):
+        deck = []
+        names = ["Goblin", "Orc", "Dragon", "Troll"]
+        attacks = [5, 8, 12, 15]
+        defenses = [3, 6, 9, 12]
+        for i in range(len(names)):
+            deck.append(Card(names[i], attacks[i], defenses[i]))
+        return deck
+
+    # draw a card from the deck
+    def draw_card(self):
+        card = self.deck[random.randint(0, len(self.deck) - 1)]
+        self.deck.remove(card)
+        return card
+
+    # deal cards to players
+    def deal_cards(self):
+        for i in range(5):
+            self.player1.hand.append(self.draw_card())
+            self.player2.hand.append(self.draw_card())
+
+    # play a turn
+    def play_turn(self, player):
+        # draw a card
+        card = self.draw_card()
+        player.hand.append(card)
+        print("{} drew a {}".format(player.name, card.name))
+
+        # choose card to play
+        print("{}'s hand:".format(player.name))
+        for i in range(len(player.hand)):
+            print("{}: {}".format(i, player.hand[i].name))
+        card_index = int(input("Choose a card to play (enter index): "))
+        card = player.hand[card_index]
+        player.hand.remove(card)
+
+        # determine damage
+        opponent = self.player2 if player == self.player1 else self.player1
+        damage = card.attack - opponent.hand[0].defense
+        if damage > 0:
+            opponent.life_points -= damage
+            print("{} dealt {} damage to {}".format(player.name, damage, opponent.name))
+
+    # run game
+    def run_game(self):
+        self.deal_cards()
+        while self.player1.life_points > 0 and self.player2.life_points > 0:
+            self.play_turn(self.player1)
+            self.play_turn(self.player2)
+        if self.player1.life_points <= 0:
+            print("{} wins!".format(self.player2.name))
+        else:
+            print("{} wins!".format(self.player1.name))
+
+# create players
+player1 = Player("Player 1")
+player2 = Player("Player 2")
+
+# create game
+game = Game(player1, player2)
+
+# run game
+game.run_game()
